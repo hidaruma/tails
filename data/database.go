@@ -1,11 +1,17 @@
+/*
+Copyright (C) 2014 Matt Layher
+Released under the MIT license
+http://opensource.org/licenses/mit-license.php
+ */
+
 package data
 
-var DB db
+var DataBase dataBase
 
-type db interface{
+type dataBase interface{
 	Open() error
 	Close() error
-	Setup() error
+	InitDB() error
 	DSN(string)
 
 	CoverInPath(string) ([]Cover, error)
@@ -25,6 +31,15 @@ type db interface{
 	LoadArtist(*Artist) error
 	SaveArtist(*Artist) error
 
+	AllSameArtists() ([]SameArtist, error)
+	LimitSameArtist(int, int) ([]SameArtist, error)
+	SearchSameArtist(string) ([]SameArtist, error)
+	CountSameArtist() (int64, error)
+	SaveSameArtist(*SameArtist) error
+	DeleteSameArtist(*SameArtist) error
+	LoadSameArtist(*SameArtist) error
+
+
 	AllAlbums() ([]Album, error)
 	LimitAlbums(int, int) ([]Album, error)
 	AlbumsForArtist(int) ([]Album, error)
@@ -35,16 +50,16 @@ type db interface{
 	LoadAlbum(*Album) error
 	SaveAlbum(*Album) error
 
-	AllFolders() ([]Folder, error)
-	LimitFolders(int, int) ([]Folder, error)
-	Subfolders(int) ([]Folder, error)
-	FoldersInPath(string) ([]Folder, error)
-	FoldersNotInPath(string) ([]Folder, error)
-	SearchFolders(string) ([]Folder, error)
-	CountFolders() (int64, error)
-	DeleteFolder(*Folder) error
-	LoadFolder(*Folder) error
-	SaveFolder(*Folder) error
+	AllDirectories() ([]Directory, error)
+	LimitDirectory(int, int) ([]Directory, error)
+	SubDirectories(int) ([]Directory, error)
+	DirectoryInPath(string) ([]Directory, error)
+	DirectoryNotInPath(string) ([]Directory, error)
+	SearchDirectories(string) ([]Directory, error)
+	CountDirectories() (int64, error)
+	DeleteDirectory(*Directory) error
+	LoadDirectory(*Directory) error
+	SaveDirectory(*Directory) error
 
 	AllSongs() ([]Song, error)
 	LimitSongs(int, int) ([]Song, error)
